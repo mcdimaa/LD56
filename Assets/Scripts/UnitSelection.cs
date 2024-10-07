@@ -29,6 +29,7 @@ public class UnitSelection : MonoBehaviour
     [Header("Other")]
     private bool moveIndicatorReady;
     private bool gatherIndicatorReady;
+    private bool attackIndicatorReady;
     public float indicatorCooldown;
 
     private void Awake()
@@ -47,6 +48,7 @@ public class UnitSelection : MonoBehaviour
         boxEndPosition = Vector2.zero;
         moveIndicatorReady = true;
         gatherIndicatorReady = true;
+        attackIndicatorReady = true;
 
         // Set other references
         boxSelectVisualObject.SetActive(true);
@@ -223,12 +225,36 @@ public class UnitSelection : MonoBehaviour
         }
     }
 
+    public void ShowAttackIndicator(Transform transform)
+    {
+        if (attackIndicatorReady)
+        {
+            attackIndicatorReady = false;
+            Instantiate(GlobalReferences.instance.attackIndicator, transform);
+            Invoke("ReadyAttackIndicator", indicatorCooldown);
+        }
+    }
+    public void ShowAttackIndicator(Vector3 vector3)
+    {
+        if (attackIndicatorReady)
+        {
+            attackIndicatorReady = false;
+            Instantiate(GlobalReferences.instance.attackIndicator, vector3, new Quaternion(0, 0, 0, 0));
+            Invoke("ReadyAttackIndicator", indicatorCooldown);
+        }
+    }
+
     /// <summary>
     /// Makes the gather indicator ready to use again
     /// </summary>
     private void ReadyGatherIndicator()
     {
         gatherIndicatorReady = true;
+    }
+
+    private void ReadyAttackIndicator()
+    {
+        attackIndicatorReady = true;
     }
 
     /// <summary>

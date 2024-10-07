@@ -149,9 +149,11 @@ MonoBehaviour:
   rtsName: Main Camp
   actions:
   - {fileID: 11400000, guid: 195e55dee10d7654e9690a33cc9704da, type: 2}
-  spawnPoint: {fileID: 3188090248817657445}
+  - {fileID: 11400000, guid: 102d46c5a825c174999146ac8f61b1ee, type: 2}
+  team: 0
   maxHealth: 1000
   health: 1000
+  spawnPoint: {fileID: 3188090248817657445}
 --- !u!1001 &1982687143631601265
 PrefabInstance:
   m_ObjectHideFlags: 0

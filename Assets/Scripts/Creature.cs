@@ -6,25 +6,13 @@ using UnityEngine.AI;
 
 public abstract class Creature : Unit
 {
-    [Header("Creature Values")]
-    public float moveSpeed;
-
-    [Header("Creature References")]
-    public NavMeshAgent navMeshAgent;
-
-    private void Awake()
-    {
-        // Set references
-        navMeshAgent = GetComponent<NavMeshAgent>();
-    }
-
     private void Update()
     {
         // Only take actions if creature is on player team
         if (team == 0)
             CheckAction();
     }
-
+    
     /// <summary>
     /// Checks whether the creature is ordered to perform an action
     /// </summary>

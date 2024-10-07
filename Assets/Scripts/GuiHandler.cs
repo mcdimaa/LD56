@@ -14,6 +14,9 @@ public class GuiHandler : MonoBehaviour
     public VisualElement uiDocument;
     public GameObject victoryDocument;
     public GameObject defeatDocument;
+    public GameObject notificationDocumentObject;
+    public VisualElement notificationDocument;
+    public Label notificationText;
 
     public Label foodNumber;
     public Label woodNumber;
@@ -36,6 +39,9 @@ public class GuiHandler : MonoBehaviour
 
         // Set other references
         uiDocument = GetComponent<UIDocument>().rootVisualElement;
+        notificationDocument = notificationDocumentObject.GetComponent<UIDocument>().rootVisualElement;
+
+        notificationText = notificationDocument.Q<Label>("Note");
 
         foodNumber = uiDocument.Q<Label>("FoodNumber");
         woodNumber = uiDocument.Q<Label>("WoodNumber");
@@ -57,6 +63,7 @@ public class GuiHandler : MonoBehaviour
         // Disable victory & defeat documents for now
         victoryDocument.SetActive(false);
         defeatDocument.SetActive(false);
+        notificationDocumentObject.SetActive(false);
     }
 
     private void Update()
@@ -182,7 +189,7 @@ public class GuiHandler : MonoBehaviour
 
             // Add functionality to the button
             actionButton.clicked += action.Execute;
-            actionButton.clicked += delegate { DisableButton(actionButton, action.cooldown); };
+            actionButton.clicked += delegate { DisableButton(actionButton, action.cooldown, action); };
 
             // Add button to the actionsBox
             actionsBox.Add(actionButton);
@@ -194,10 +201,11 @@ public class GuiHandler : MonoBehaviour
         actionsBox.Clear();
     }
 
-    public void DisableButton(Button button, float cooldown)
+    public void DisableButton(Button button, float cooldown, ActionData action)
     {
         button.SetEnabled(false);
-        StartCoroutine(EnableButton(button, cooldown));
+        //StartCoroutine(EnableButton(button, cooldown));
+        StartCoroutine(CheckActionReady(action, button));
     }
 
     public IEnumerator EnableButton(Button button, float cooldown)
@@ -222,5 +230,18 @@ public class GuiHandler : MonoBehaviour
         }
 
         yield return null;
+    }
+
+    public void ShowNotification(string message)
+    {
+        CancelInvoke("HideNotification");
+        notificationText.text = message;
+        notificationDocumentObject.SetActive(true);
+        Invoke("HideNotification", 1f);
+    }
+
+    public void HideNotification()
+    {
+        notificationDocumentObject.SetActive(false);
     }
 }

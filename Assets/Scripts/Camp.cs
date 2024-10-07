@@ -8,11 +8,8 @@ public class Camp : Building
     [Header("Camp References")]
     public Transform spawnPoint;
 
-    private void Update()
+    public void OnDestroy()
     {
-        if (health <= 0)
-        {
-            GameStateHandler.instance.PlayerDefeat();
-        }
+        GameStateHandler.instance.PlayerDefeat();
     }
 }

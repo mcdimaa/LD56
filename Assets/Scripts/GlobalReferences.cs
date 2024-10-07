@@ -12,9 +12,15 @@ public class GlobalReferences : MonoBehaviour
     public GameObject enemySelectedIndicator;
     public GameObject moveLocationIndicator;
     public GameObject gatherIndicator;
+    public GameObject attackIndicator;
 
     [Header("Prefabs - Creatures")]
     public GameObject workerCreature;
+    public GameObject fighterCreature;
+
+    [Header("Prefabs - Golems")]
+    public GameObject fighterGolem;
+    public GameObject tankGolem;
 
     [Header("Prefabs - Tools")]
     public GameObject hoe;
@@ -27,7 +33,10 @@ public class GlobalReferences : MonoBehaviour
     [Header("LayerMasks")]
     public LayerMask groundMask;
     public LayerMask resourceMask;
+    public LayerMask unitMask;
+    public LayerMask buildingMask;
     public LayerMask workerActionMask;
+    public LayerMask fighterActionMask;
     public LayerMask selectableMask;
 
     [Header("Other")]

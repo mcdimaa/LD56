@@ -141,9 +141,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9b5d2dbb32816e449590581f0627027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rtsName: Worker
-  maxHealth: 100
-  health: 100
+  rtsName: Worker Creature
+  actions: []
+  team: 0
+  maxHealth: 50
+  health: 50
   moveSpeed: 3.5
   navMeshAgent: {fileID: 653117523115355475}
   gatherRate: 1
@@ -153,5 +155,9 @@ MonoBehaviour:
   carryCapacity: 10
   carryAmount: 0
   targetResource: {fileID: 0}
+  isOccupyingPosition: 0
   occupiedPosition: {x: 0, y: 0, z: 0}
+  hasTargetPosition: 0
+  targetPosition: {x: 0, y: 0, z: 0}
+  previouslyTargetedResource: {fileID: 0}
   tool: {fileID: 0}

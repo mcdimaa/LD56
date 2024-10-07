@@ -17,14 +17,12 @@ public class GameStateHandler : MonoBehaviour
     public void PlayerVictory()
     {
         UnitSelection.instance.StopAllUnits();
-        //GuiHandler.instance.victoryDocument.SetEnabled(true);
         GuiHandler.instance.victoryDocument.SetActive(true);
     }
 
     public void PlayerDefeat()
     {
         UnitSelection.instance.StopAllUnits();
-        //GuiHandler.instance.defeatDocument.SetEnabled(true);
         GuiHandler.instance.defeatDocument.SetActive(true);
     }
 }

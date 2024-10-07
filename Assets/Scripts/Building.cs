@@ -18,4 +18,21 @@ public class Building : RtsObject
 
         return infoList;
     }
+
+    public void TakeDamage(int amount)
+    {
+        if (health - amount <= 0)
+        {
+            Break();
+        }
+        else
+        {
+            health -= amount;
+        }
+    }
+
+    public void Break()
+    {
+        Destroy(gameObject);
+    }
 }

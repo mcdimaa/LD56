@@ -56,5 +56,9 @@ public abstract class RtsObject : MonoBehaviour
     public void OnDestroy()
     {
         UnitSelection.instance.rtsObjects.Remove(this);
+        if (UnitSelection.instance.selectedObjects.Contains(this))
+        {
+            UnitSelection.instance.selectedObjects.Remove(this);
+        }
     }
 }

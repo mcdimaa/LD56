@@ -9,3 +9,11 @@ public class CreateWorkerActionBehaviour : IActionBehaviour
         ActionManager.instance.SpawnWorker();
     }
 }
+
+public class CreateFighterActionBehaviour : IActionBehaviour
+{
+    public void Execute()
+    {
+        ActionManager.instance.SpawnFighter();
+    }
+}

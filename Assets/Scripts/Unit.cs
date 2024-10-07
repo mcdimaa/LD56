@@ -2,15 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class Unit : RtsObject
 {
     [Header("Unit Stats")]
     public int maxHealth;
     public int health;
+    public float moveSpeed;
+
+    [Header("Unit References")]
+    public NavMeshAgent navMeshAgent;
 
     private void Awake()
     {
+        // Set references
+        navMeshAgent = GetComponent<NavMeshAgent>();
         InitialiseStats();
     }
 

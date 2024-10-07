@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63107bd4d172d874aa45aedb09794cb7, type: 3}
-  m_Name: CreateWorker
+  m_Name: CreateFighter
   m_EditorClassIdentifier: 
-  actionName: Create Worker
-  icon: {fileID: 21300000, guid: 5ae46d699817ddc46b5c483446a785ba, type: 3}
-  cooldown: 5
-  readyToUse: 0
+  actionName: Create Fighter
+  icon: {fileID: 21300000, guid: 3c94f17c5cf799949a72fe8f97542c9c, type: 3}
+  cooldown: 10
+  readyToUse: 1
   actionBehaviour:
-    rid: 1337576956043984952
+    rid: 1337576956043984951
   foodCost: 50
-  woodCost: 0
-  stoneCost: 0
-  oreCost: 0
+  woodCost: 50
+  stoneCost: 50
+  oreCost: 50
   references:
     version: 2
     RefIds:
-    - rid: 1337576956043984952
-      type: {class: CreateWorkerActionBehaviour, ns: , asm: Assembly-CSharp}
+    - rid: 1337576956043984951
+      type: {class: CreateFighterActionBehaviour, ns: , asm: Assembly-CSharp}
       data: 

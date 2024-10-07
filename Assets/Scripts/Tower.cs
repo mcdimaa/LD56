@@ -1,14 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Tower : Building
 {
-    private void Update()
+    [Header("Tower Values")]
+    public Transform spawnPoint;
+    public float spawnInterval;
+
+    public void Start()
     {
-        if (health <= 0)
+        InvokeRepeating("SpawnGolem", spawnInterval, spawnInterval);
+    }
+
+    public void SpawnGolem()
+    {
+        int golem = UnityEngine.Random.Range(0, 2);
+
+        if (golem == 0)
         {
-            GameStateHandler.instance.PlayerVictory();
+            Instantiate(GlobalReferences.instance.fighterGolem, spawnPoint.position, new Quaternion(0, 0, 0, 0));
         }
+        else
+        {
+            Instantiate(GlobalReferences.instance.tankGolem, spawnPoint.position, new Quaternion(0, 0, 0, 0));
+        }
+    }
+
+    public void OnDestroy()
+    {
+        GameStateHandler.instance.PlayerVictory();
     }
 }
