@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
@@ -34,7 +35,7 @@ public class Worker : Creature
     public Resource previouslyTargetedResource;
 
     [Header("Worker References")]
-    public GameObject tool;
+    public Tool tool;
 
     private void Awake()
     {
@@ -53,7 +54,7 @@ public class Worker : Creature
     public override void CheckAction()
     {
         // If unit is selected
-        if (UnitSelection.instance.selectedUnits.Contains(this))
+        if (UnitSelection.instance.selectedObjects.Contains(this))
         {
             // If the action key has been pressed
             if (Input.GetKeyDown(Keybinds.instance.actionKey))
@@ -92,7 +93,6 @@ public class Worker : Creature
                         // Free the previously worked position if there was one
                         if (isOccupyingPosition)
                         {
-                            Debug.Log(targetResource + ", " + occupiedPosition);
                             FormationHandler.instance.FreePosition(targetResource, occupiedPosition);
                             isOccupyingPosition = false;
                         }
@@ -129,7 +129,15 @@ public class Worker : Creature
         EquipTool();
 
         // Move to the resource, if it has spaces
-        Vector3 destination = FormationHandler.instance.GetDestination(targetResource.transform.GetComponent<RtsObject>());
+        Vector3 destination;
+        if (targetResource != null)
+        {
+            destination = FormationHandler.instance.GetDestination(targetResource.transform.GetComponent<RtsObject>());
+        }
+        else
+        {
+            yield break;
+        }
         if (destination != Vector3.zero)
         {
             MoveTo(destination);
@@ -144,6 +152,13 @@ public class Worker : Creature
         Vector3 ignoreY = destination;
         ignoreY.y = transform.position.y;
 
+        // Update display info on begin gather (only if worker is selected)
+        if (UnitSelection.instance.selectedObjects.Count == 1 && UnitSelection.instance.selectedObjects.Contains(this))
+        {
+            GuiHandler.instance.ClearDisplayInfo();
+            GuiHandler.instance.DisplayInfo(GetObjectInfo());
+        }
+
         yield return new WaitUntil(() => Vector3.Distance(ignoreY, transform.position) <= 0.05);
         if (targetResource != lastRes) yield break; // Has changed resource, break this coroutine
         navMeshAgent.destination = transform.position;
@@ -154,8 +169,11 @@ public class Worker : Creature
         // Enable the tool's animation
         tool.GetComponent<Animator>().SetBool("working", true);
 
-        // Make worker look at the resource
-        transform.LookAt(targetResource.transform.position);
+        if (targetResource != null)
+        {
+            // Make worker look at the resource
+            transform.LookAt(targetResource.transform.position);
+        }
 
         yield break;
     }
@@ -179,12 +197,14 @@ public class Worker : Creature
                 {
                     // The resource is empty, destroy it
                     Destroy(targetResource.gameObject);
+                    // Stop this worker and others at the resource
+                    StopIdleWorkers();
                 }
             }
             else
             {
-                // Find a different resource of same type
-                throw new NotImplementedException();
+                // Stop this worker and others at the resource
+                StopIdleWorkers();
             }
 
             // Check capacity again now that more has been gathered
@@ -206,6 +226,13 @@ public class Worker : Creature
             // Deposit the resources
             StartCoroutine(Deposit());
         }
+
+        // Update display info every time worker gathers (only if worker is selected)
+        if (UnitSelection.instance.selectedObjects.Count == 1 && UnitSelection.instance.selectedObjects.Contains(this))
+        {
+            GuiHandler.instance.ClearDisplayInfo();
+            GuiHandler.instance.DisplayInfo(GetObjectInfo());
+        }
     }
 
     /// <summary>
@@ -219,10 +246,10 @@ public class Worker : Creature
         hasTargetPosition = false;
 
         // Move to home
-        MoveTo(GlobalReferences.instance.home.transform.position);
+        MoveTo(GlobalReferences.instance.mainCamp.transform.position);
 
         // Wait until the worker is within range of home to deposit resource
-        yield return new WaitUntil(() => Vector3.Distance(GlobalReferences.instance.home.transform.position, transform.position) <= workRange + (GlobalReferences.instance.home.transform.lossyScale.x / 2));
+        yield return new WaitUntil(() => Vector3.Distance(GlobalReferences.instance.mainCamp.transform.position, transform.position) <= workRange + (GlobalReferences.instance.mainCamp.transform.lossyScale.x / 2));
 
         // Deposit the resources into inventory
         Inventory.instance.AddResource(targetResource.resourceType, carryAmount);
@@ -279,20 +306,20 @@ public class Worker : Creature
     {
         if (tool != null)
         {
-            Destroy(tool);
+            Destroy(tool.gameObject);
         }
 
         if (job == Job.Gatherer)
         {
-            tool = Instantiate(GlobalReferences.instance.hoe, transform);
+            tool = Instantiate(GlobalReferences.instance.hoe, transform).GetComponent<Tool>();
         }
         else if (job == Job.Lumberjack)
         {
-            tool = Instantiate(GlobalReferences.instance.axe, transform);
+            tool = Instantiate(GlobalReferences.instance.axe, transform).GetComponent<Tool>();
         }
         else if (job == Job.Miner)
         {
-            tool = Instantiate(GlobalReferences.instance.pickaxe, transform);
+            tool = Instantiate(GlobalReferences.instance.pickaxe, transform).GetComponent<Tool>();
         }
 
         // Set worker to this worker
@@ -308,8 +335,78 @@ public class Worker : Creature
         this.job = job;
     }
 
+    public void FindNearbyResource()
+    {
+        // Initialise lists
+        UnityEngine.Object[] allResources = FindObjectsByType(typeof(Resource), FindObjectsSortMode.None);
+        List<Resource> sameResources = new List<Resource>();
+
+        // Check every resource on the map
+        foreach (UnityEngine.Object obj in allResources)
+        {
+            // If the resource is the same type as previously worked by worker
+            if (obj.GetComponent<Resource>().resourceType == targetResource.resourceType && obj != targetResource)
+            {
+                // Add it to the sameResources list
+                sameResources.Add(obj.GetComponent<Resource>());
+            }
+        }
+
+        // Only go if there is atleast one resource of same type on map
+        if (sameResources.Count > 0)
+        {
+            // Initialise closest resource
+            Resource closestResource = sameResources[0];
+
+            // Check every resource of the same type
+            foreach (Resource resource in sameResources)
+            {
+                // If resource is closer to worker than the current closest resource
+                if (Vector3.Distance(resource.transform.position, this.transform.position) < Vector3.Distance(closestResource.transform.position, this.transform.position))
+                {
+                    targetResource = resource;
+                }
+            }
+
+            StartCoroutine(GatherResource());
+        }
+        else
+        {
+            Debug.Log("No same resources found");
+        }
+    }
+
+    public void StopIdleWorkers()
+    {
+        foreach (RtsObject obj in UnitSelection.instance.rtsObjects)
+        {
+            if (obj is Worker)
+            {
+                Worker worker = (Worker)obj;
+                if (worker.targetResource == null && worker.isOccupyingPosition)
+                {
+                    worker.navMeshAgent.destination = worker.transform.position;
+                    worker.tool.GetComponent<Animator>().SetBool("working", false);
+                }
+            }
+        }
+    }
+
     public override void MoveTo(Vector3 location)
     {
         navMeshAgent.SetDestination(location);
+    }
+
+    public override List<Tuple<string, string>> GetObjectInfo()
+    {
+        List<Tuple<string, string>> infoList = new List<Tuple<string, string>>();
+
+        infoList.Add(new Tuple<string, string>("Name", rtsName));
+        infoList.Add(new Tuple<string, string>("Health", health.ToString() + "/" + maxHealth.ToString()));
+        infoList.Add(new Tuple<string, string>("MoveSpeed", moveSpeed.ToString() + "m/s"));
+        infoList.Add(new Tuple<string, string>("Job", job.ToString()));
+        infoList.Add(new Tuple<string, string>("Carried", carryAmount.ToString() + "/" + carryCapacity.ToString()));
+
+        return infoList;
     }
 }

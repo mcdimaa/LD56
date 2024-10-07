@@ -5,19 +5,19 @@
             <ui:Label tabindex="-1" text="Resources" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Header" class="header" />
             <ui:VisualElement name="Resources" style="flex-grow: 1; justify-content: center; align-items: center; flex-wrap: nowrap; flex-direction: column;">
                 <ui:VisualElement name="Food" class="resourceBox" style="flex-grow: 1; width: 100%; white-space: normal; flex-direction: row;">
-                    <ui:Label tabindex="-1" text="Food" parse-escape-sequences="true" display-tooltip-when-elided="true" name="FoodLabel" class="paragraph resourceLabel" style="align-self: flex-start;" />
+                    <ui:Label tabindex="-1" text="Food" parse-escape-sequences="true" display-tooltip-when-elided="true" name="FoodLabel" class="paragraph resourceLabel paragraphBold" style="align-self: flex-start;" />
                     <ui:Label tabindex="-1" text="0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="FoodNumber" class="paragraph resourceLabel" style="align-self: flex-end; -unity-text-align: upper-left; white-space: nowrap; align-items: auto; flex-wrap: nowrap;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Wood" class="resourceBox" style="flex-grow: 1; width: 100%;">
-                    <ui:Label tabindex="-1" text="Wood" parse-escape-sequences="true" display-tooltip-when-elided="true" name="WoodLabel" class="paragraph resourceLabel" style="align-self: flex-start;" />
+                    <ui:Label tabindex="-1" text="Wood" parse-escape-sequences="true" display-tooltip-when-elided="true" name="WoodLabel" class="paragraph resourceLabel paragraphBold" style="align-self: flex-start;" />
                     <ui:Label tabindex="-1" text="0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="WoodNumber" class="paragraph resourceLabel" style="align-self: flex-end; -unity-text-align: upper-left;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Stone" class="resourceBox" style="flex-grow: 1; width: 100%;">
-                    <ui:Label tabindex="-1" text="Stone" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StoneLabel" class="paragraph resourceLabel" style="align-self: flex-start;" />
+                    <ui:Label tabindex="-1" text="Stone" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StoneLabel" class="paragraph resourceLabel paragraphBold" style="align-self: flex-start;" />
                     <ui:Label tabindex="-1" text="0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StoneNumber" class="paragraph resourceLabel" style="-unity-text-align: upper-left; align-self: flex-end;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Ore" class="resourceBox" style="flex-grow: 1; width: 100%;">
-                    <ui:Label tabindex="-1" text="Ore" parse-escape-sequences="true" display-tooltip-when-elided="true" name="OreLabel" class="paragraph resourceLabel" style="align-self: flex-start;" />
+                    <ui:Label tabindex="-1" text="Ore" parse-escape-sequences="true" display-tooltip-when-elided="true" name="OreLabel" class="paragraph resourceLabel paragraphBold" style="align-self: flex-start;" />
                     <ui:Label tabindex="-1" text="0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="OreNumber" class="paragraph resourceLabel" style="-unity-text-align: upper-left; align-self: flex-end;" />
                 </ui:VisualElement>
             </ui:VisualElement>
@@ -28,22 +28,32 @@
             <ui:Label tabindex="-1" text="Testing Tools" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Header" class="header" style="align-self: flex-end;" />
             <ui:VisualElement name="Tools" style="flex-grow: 1; justify-content: center; align-items: center; flex-wrap: nowrap; flex-direction: column; align-self: auto;">
                 <ui:VisualElement name="Food" class="resourceBox" style="flex-grow: 1; width: 100%; white-space: normal; flex-direction: row;">
-                    <ui:Label tabindex="-1" text="Food" parse-escape-sequences="true" display-tooltip-when-elided="true" name="FoodLabel" class="paragraph resourceLabel" style="align-self: flex-start;" />
+                    <ui:Label tabindex="-1" text="Food" parse-escape-sequences="true" display-tooltip-when-elided="true" name="FoodLabel" class="paragraph resourceLabel paragraphBold" style="align-self: flex-start;" />
                     <ui:Button text="+100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="FoodButton" class="button longButton" style="background-image: url(&quot;project://database/Assets/Packages/kenney_ui-pack/PNG/Blue/Double/button_rectangle_depth_flat.png?fileID=2800000&amp;guid=0346bb47dd9c1b948af56baa6b27650e&amp;type=3#button_rectangle_depth_flat&quot;); justify-content: flex-start;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Wood" class="resourceBox" style="flex-grow: 1; width: 100%;">
-                    <ui:Label tabindex="-1" text="Wood" parse-escape-sequences="true" display-tooltip-when-elided="true" name="WoodLabel" class="paragraph resourceLabel" style="align-self: flex-start;" />
+                    <ui:Label tabindex="-1" text="Wood" parse-escape-sequences="true" display-tooltip-when-elided="true" name="WoodLabel" class="paragraph resourceLabel paragraphBold" style="align-self: flex-start;" />
                     <ui:Button text="+100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="WoodButton" class="button longButton" style="background-image: url(&quot;project://database/Assets/Packages/kenney_ui-pack/PNG/Blue/Double/button_rectangle_depth_flat.png?fileID=2800000&amp;guid=0346bb47dd9c1b948af56baa6b27650e&amp;type=3#button_rectangle_depth_flat&quot;); justify-content: flex-start;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Stone" class="resourceBox" style="flex-grow: 1; width: 100%;">
-                    <ui:Label tabindex="-1" text="Stone" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StoneLabel" class="paragraph resourceLabel" style="align-self: flex-start;" />
+                    <ui:Label tabindex="-1" text="Stone" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StoneLabel" class="paragraph resourceLabel paragraphBold" style="align-self: flex-start;" />
                     <ui:Button text="+100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StoneButton" class="button longButton" style="background-image: url(&quot;project://database/Assets/Packages/kenney_ui-pack/PNG/Blue/Double/button_rectangle_depth_flat.png?fileID=2800000&amp;guid=0346bb47dd9c1b948af56baa6b27650e&amp;type=3#button_rectangle_depth_flat&quot;); justify-content: flex-start;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Ore" class="resourceBox" style="flex-grow: 1; width: 100%;">
-                    <ui:Label tabindex="-1" text="Ore" parse-escape-sequences="true" display-tooltip-when-elided="true" name="OreLabel" class="paragraph resourceLabel" style="align-self: flex-start;" />
+                    <ui:Label tabindex="-1" text="Ore" parse-escape-sequences="true" display-tooltip-when-elided="true" name="OreLabel" class="paragraph resourceLabel paragraphBold" style="align-self: flex-start;" />
                     <ui:Button text="+100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="OreButton" class="button longButton" style="background-image: url(&quot;project://database/Assets/Packages/kenney_ui-pack/PNG/Blue/Double/button_rectangle_depth_flat.png?fileID=2800000&amp;guid=0346bb47dd9c1b948af56baa6b27650e&amp;type=3#button_rectangle_depth_flat&quot;); justify-content: flex-start;" />
                 </ui:VisualElement>
             </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="Area3" style="background-image: none; width: 40%; height: 30%; transform-origin: center; -unity-slice-left: 10; -unity-slice-top: 10; -unity-slice-right: 10; -unity-slice-bottom: 20; top: 10%; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; justify-content: center; align-self: flex-start; -unity-font-style: normal; left: 20%; flex-direction: row;">
+        <ui:VisualElement name="Box" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Packages/kenney_ui-pack/PNG/Green/Double/button_rectangle_depth_flat.png?fileID=2800000&amp;guid=252ef24ce59d0bc4986569b990a86c67&amp;type=3#button_rectangle_depth_flat&quot;); -unity-slice-left: 10; -unity-slice-top: 10; -unity-slice-right: 10; -unity-slice-bottom: 20; padding-top: 20px; padding-right: 20px; padding-bottom: 20px; padding-left: 20px; -unity-slice-scale: 1px; flex-wrap: nowrap; width: 50%;">
+            <ui:Label tabindex="-1" text="Selected Object" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Header" class="header" />
+            <ui:VisualElement name="StatsBox" style="flex-grow: 1;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Box" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Packages/kenney_ui-pack/PNG/Green/Double/button_rectangle_depth_flat.png?fileID=2800000&amp;guid=252ef24ce59d0bc4986569b990a86c67&amp;type=3#button_rectangle_depth_flat&quot;); -unity-slice-left: 10; -unity-slice-top: 10; -unity-slice-right: 10; -unity-slice-bottom: 20; padding-top: 20px; padding-right: 20px; padding-bottom: 20px; padding-left: 20px; -unity-slice-scale: 1px; flex-wrap: nowrap; width: 50%;">
+            <ui:Label tabindex="-1" text="Actions" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Header" class="header" />
+            <ui:VisualElement name="ActionsBox" style="flex-grow: 1; flex-wrap: wrap; flex-direction: row;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

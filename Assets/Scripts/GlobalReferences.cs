@@ -20,6 +20,9 @@ public class GlobalReferences : MonoBehaviour
     public GameObject axe;
     public GameObject pickaxe;
 
+    [Header("Prefabs - Buildings")]
+    public GameObject camp;
+
     [Header("LayerMasks")]
     public LayerMask groundMask;
     public LayerMask resourceMask;
@@ -27,7 +30,7 @@ public class GlobalReferences : MonoBehaviour
     public LayerMask selectableMask;
 
     [Header("Other")]
-    public GameObject home;
+    public Camp mainCamp;
 
     private void Awake()
     {

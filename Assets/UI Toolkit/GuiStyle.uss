@@ -44,10 +44,73 @@
     color: rgb(0, 0, 0);
 }
 
+.paragraphBold {
+    -unity-font: url("project://database/Assets/Packages/kenney_ui-pack/Font/Kenney%20Future.ttf?fileID=12800000&guid=2a630d02bccc74945b6918b077b27ee6&type=3#Kenney Future");
+    -unity-font-definition: initial;
+    -unity-font-style: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
+    width: 50%;
+    align-self: auto;
+    justify-content: center;
+    align-items: auto;
+    -unity-text-align: upper-left;
+    color: rgb(0, 0, 0);
+}
+
 .resourceBox {
     flex-direction: row;
     padding-top: 0;
     padding-right: 0;
     padding-bottom: 0;
     padding-left: 0;
+}
+
+.statBar {
+    flex-direction: row;
+}
+
+.actionButton {
+    flex-grow: 0;
+    width: 73px;
+    height: 73px;
+    background-image: url("project://database/Assets/Packages/kenney_ui-pack/PNG/Blue/Double/button_square_depth_gloss.png?fileID=2800000&guid=997aaab598976e641b008fb30101773e&type=3#button_square_depth_gloss");
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    -unity-font: url("project://database/Assets/Packages/kenney_ui-pack/Font/Kenney%20Future.ttf?fileID=12800000&guid=2a630d02bccc74945b6918b077b27ee6&type=3#Kenney Future");
+    -unity-font-definition: initial;
+    font-size: 10px;
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+}
+
+.actionIcon {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.actionLabel {
+    width: 100%;
+    height: 100%;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    font-size: 12px;
+    -unity-text-align: middle-center;
+    -unity-font-definition: initial;
+    -unity-font: url("project://database/Assets/Packages/kenney_ui-pack/Font/Kenney%20Future.ttf?fileID=12800000&guid=2a630d02bccc74945b6918b077b27ee6&type=3#Kenney Future");
+    flex-wrap: wrap;
+    text-overflow: ellipsis;
+    justify-content: center;
+    align-self: center;
+    white-space: normal;
+    flex-shrink: 0;
 }

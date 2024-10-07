@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System;
+using System.Linq;
 
 public class GuiHandler : MonoBehaviour
 {
@@ -20,6 +22,9 @@ public class GuiHandler : MonoBehaviour
     public Button addWoodButton;
     public Button addStoneButton;
     public Button addOreButton;
+
+    public VisualElement statsBox;
+    public VisualElement actionsBox;
 
     private void Awake()
     {
@@ -43,6 +48,9 @@ public class GuiHandler : MonoBehaviour
         addStoneButton.clicked += AddStone;
         addOreButton = uiDocument.Q<Button>("OreButton");
         addOreButton.clicked += AddOre;
+
+        statsBox = uiDocument.Q<VisualElement>("StatsBox");
+        actionsBox = uiDocument.Q<VisualElement>("ActionsBox");
     }
 
     private void Update()
@@ -91,5 +99,122 @@ public class GuiHandler : MonoBehaviour
     private void AddOre()
     {
         Inventory.instance.AddResource(ResourceType.Ore, 100);
+    }
+
+    /// <summary>
+    /// Displays onto the GUI the provided info
+    /// </summary>
+    /// <param name="infoList">Info to display</param>
+    public void DisplayInfo(List<Tuple<string, string>> infoList)
+    {
+        foreach (Tuple<string, string> tuple in infoList)
+        {
+            // Initialise VisualElements
+            VisualElement statBar = new VisualElement();
+            VisualElement statName = new VisualElement();
+            VisualElement statValue = new VisualElement();
+
+            // Apply style to statBar
+            statBar.AddToClassList("statBar");
+
+            // Initialise Labels & their text
+            Label nameLabel = new Label(tuple.Item1);
+            Label valueLabel = new Label(tuple.Item2);
+
+            // Apply style to each label
+            nameLabel.AddToClassList("paragraphBold");
+            valueLabel.AddToClassList("paragraph");
+
+            // Add labels to their parents
+            statName.Add(nameLabel);
+            statValue.Add(valueLabel);
+
+            // Add stat name and value to the statBar
+            statBar.Add(statName);
+            statBar.Add(statValue);
+
+            // Add statBar to the statBox
+            statsBox.Add(statBar);
+        }
+    }
+
+    public void ClearDisplayInfo()
+    {
+        statsBox.Clear();
+    }
+
+    public void DisplayActions(List<ActionData> actionList)
+    {
+        foreach (ActionData action in actionList)
+        {
+            // Initialise VisualElements
+            Button actionButton = new Button();
+            Label actionLabel = new Label();
+            VisualElement actionIcon = new VisualElement();
+
+            // Disable button if ability is not ready yet
+            if (!action.readyToUse)
+            {
+                actionButton.SetEnabled(false);
+                StartCoroutine(CheckActionReady(action, actionButton));
+            }
+
+            // Apply styles
+            actionButton.AddToClassList("actionButton");
+            actionLabel.AddToClassList("actionLabel");
+            actionIcon.AddToClassList("actionIcon");
+
+            // Add image to icon
+            actionIcon.style.backgroundImage = new StyleBackground(action.icon);
+
+            // Add text to label
+            actionLabel.text = action.name;
+
+            // Add label and icon to the button
+            actionButton.Add(actionIcon);
+            actionButton.Add(actionLabel);
+
+            // Add functionality to the button
+            actionButton.clicked += action.Execute;
+            actionButton.clicked += delegate { DisableButton(actionButton, action.cooldown); };
+
+            // Add button to the actionsBox
+            actionsBox.Add(actionButton);
+        }
+    }
+
+    public void ClearActionsDisplay()
+    {
+        actionsBox.Clear();
+    }
+
+    public void DisableButton(Button button, float cooldown)
+    {
+        button.SetEnabled(false);
+        StartCoroutine(EnableButton(button, cooldown));
+    }
+
+    public IEnumerator EnableButton(Button button, float cooldown)
+    {
+        yield return new WaitForSeconds(cooldown);
+
+        button.SetEnabled(true);
+
+        yield return null;
+    }
+
+    public IEnumerator CheckActionReady(ActionData action, Button button)
+    {
+        while (true)
+        {
+            if (action.readyToUse)
+            {
+                button.SetEnabled(true);
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        yield return null;
     }
 }

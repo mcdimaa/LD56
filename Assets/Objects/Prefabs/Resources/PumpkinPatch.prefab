@@ -34,6 +34,7 @@ Transform:
   - {fileID: 4206540996283684916}
   - {fileID: 5397834409092107823}
   - {fileID: 6538726852870468421}
+  - {fileID: 32094087255194126}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6081251333827787595
@@ -49,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rtsName: Pumpkin Patch
+  actions: []
   resourceType: 0
   maxResourceAmount: 200
   resourceAmount: 200
@@ -76,6 +78,37 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &8500001212000290793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 32094087255194126}
+  m_Layer: 9
+  m_Name: IndicatorScaler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &32094087255194126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500001212000290793}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8370602693421532349}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4461408904225898463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -138,6 +171,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: crop_pumpkin
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e427de6eda685124f8fac3e2c9b7cbfc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -228,6 +266,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: crop_pumpkin (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e427de6eda685124f8fac3e2c9b7cbfc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -316,6 +359,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: crop_pumpkin (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e427de6eda685124f8fac3e2c9b7cbfc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
 
 public class UnitSelection : MonoBehaviour
 {
@@ -20,8 +22,8 @@ public class UnitSelection : MonoBehaviour
     public VisualElement boxSelectionVisual;
 
     [Header("Lists")]
-    public List<Unit> units;
-    public List<Unit> selectedUnits;
+    public List<RtsObject> rtsObjects;
+    public List<RtsObject> selectedObjects;
 
     [Header("Other")]
     private bool moveIndicatorReady;
@@ -35,8 +37,8 @@ public class UnitSelection : MonoBehaviour
             instance = this;
 
         // Initialise lists
-        units = new List<Unit>();
-        selectedUnits = new List<Unit>();
+        rtsObjects = new List<RtsObject>();
+        selectedObjects = new List<RtsObject>();
 
         // Initialise other variables
         boxSelection = new Rect();
@@ -54,9 +56,9 @@ public class UnitSelection : MonoBehaviour
     private void Start()
     {
         // Add all units to the units list
-        foreach (Unit unit in FindObjectsByType(typeof(Unit), FindObjectsSortMode.None))
+        foreach (RtsObject rtsObject in FindObjectsByType(typeof(RtsObject), FindObjectsSortMode.None))
         {
-            units.Add(unit);
+            rtsObjects.Add(rtsObject);
         }
 
         // Initialise box selection visual
@@ -68,27 +70,49 @@ public class UnitSelection : MonoBehaviour
         // If player has pressed the selection key
         if (Input.GetKeyUp(Keybinds.instance.selectKey))
         {
-            // Shoot a raycast from camera to clicked point (mouse position)
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            // Make sure user is not clicking on the UI (if they are, ignore unit command)
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                // Shoot a raycast from camera to clicked point (mouse position)
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            // Hit a clickable object
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, GlobalReferences.instance.selectableMask))
-            {
-                if (Input.GetKey(Keybinds.instance.multipleSelectKey))
+                // Hit a clickable object
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, GlobalReferences.instance.selectableMask))
                 {
-                    SelectMultipleUnits(hit.collider.GetComponent<Unit>());
+
+                    if (Input.GetKey(Keybinds.instance.multipleSelectKey))
+                    {
+                        RtsObject hitObject = hit.collider.GetComponent<RtsObject>();
+
+                        SelectMultipleUnits(hitObject);
+                    }
+                    else
+                    {
+                        RtsObject hitObject = hit.collider.GetComponent<RtsObject>();
+
+                        SelectUnit(hitObject);
+
+                        GuiHandler.instance.ClearActionsDisplay();
+                        GuiHandler.instance.ClearDisplayInfo();
+                        GuiHandler.instance.DisplayInfo(hitObject.GetObjectInfo());
+
+                        if (hitObject.actions.Count != 0)
+                        {
+                            GuiHandler.instance.ClearActionsDisplay();
+                            GuiHandler.instance.DisplayActions(hitObject.GetObjectActions());
+                        }
+                    }
                 }
-                else
+                else // Didn't hit a clickable object
                 {
-                    SelectUnit(hit.collider.GetComponent<Unit>());
-                }
-            }
-            else // Didn't hit a clickable object
-            {
-                if (!Input.GetKey(Keybinds.instance.multipleSelectKey))
-                {
-                    DeselectAll();
+                    if (!Input.GetKey(Keybinds.instance.multipleSelectKey))
+                    {
+                        DeselectAll();
+
+                        GuiHandler.instance.ClearDisplayInfo();
+                        GuiHandler.instance.ClearActionsDisplay();
+                    }
                 }
             }
         }
@@ -223,38 +247,37 @@ public class UnitSelection : MonoBehaviour
     /// Adds a provided unit to the units list
     /// </summary>
     /// <param name="unit"></param>
-    public void AddUnit(Unit unit)
+    public void AddUnit(RtsObject rtsObject)
     {
-        units.Add(unit);
-        unit.Select();
+        rtsObjects.Add(rtsObject);
     }
 
     /// <summary>
     /// Selects a single provided unit
     /// </summary>
     /// <param name="unit">The unit to select</param>
-    public void SelectUnit(Unit unit)
+    public void SelectUnit(RtsObject rtsObject)
     {
         DeselectAll();
-        selectedUnits.Add(unit);
-        unit.Select();
+        selectedObjects.Add(rtsObject);
+        rtsObject.Select();
     }
 
     /// <summary>
     /// Adds a provided unit to the selection
     /// </summary>
     /// <param name="unit">The unit to select</param>
-    public void SelectMultipleUnits(Unit unit)
+    public void SelectMultipleUnits(RtsObject rtsObject)
     {
-        if (!selectedUnits.Contains(unit))
+        if (!selectedObjects.Contains(rtsObject))
         {
-            selectedUnits.Add(unit);
-            unit.Select();
+            selectedObjects.Add(rtsObject);
+            rtsObject.Select();
         }
         else
         {
-            selectedUnits.Remove(unit);
-            unit.Deselect();
+            selectedObjects.Remove(rtsObject);
+            rtsObject.Deselect();
         }
     }
 
@@ -263,12 +286,12 @@ public class UnitSelection : MonoBehaviour
     /// </summary>
     public void DragSelect()
     {
-        foreach (Unit unit in units)
+        foreach (RtsObject rtsObject in rtsObjects)
         {
             // Calculate proper position based on canvas/screen size
             var canvasSize = boxSelectionDocument.resolvedStyle;
 
-            var point = Camera.main.WorldToScreenPoint(unit.transform.position);
+            var point = Camera.main.WorldToScreenPoint(rtsObject.transform.position);
 
             point.x = point.x * canvasSize.width / Screen.width;
             point.y = canvasSize.height - (point.y * canvasSize.height / Screen.height);
@@ -276,11 +299,11 @@ public class UnitSelection : MonoBehaviour
             if (boxSelection.Contains(point))
             {
                 // If unit isn't already selected
-                if (!selectedUnits.Contains(unit))
+                if (!selectedObjects.Contains(rtsObject))
                 {
                     // Add it to selection
-                    selectedUnits.Add(unit);
-                    unit.Select();
+                    selectedObjects.Add(rtsObject);
+                    rtsObject.Select();
                 }
             }
         }
@@ -292,7 +315,7 @@ public class UnitSelection : MonoBehaviour
     /// <param name="unit">The unit to deselect</param>
     public void DeselectUnit(Unit unit)
     {
-        selectedUnits.Remove(unit);
+        selectedObjects.Remove(unit);
         unit.Deselect();
     }
 
@@ -301,10 +324,11 @@ public class UnitSelection : MonoBehaviour
     /// </summary>
     public void DeselectAll()
     {
-        foreach (Unit unit in selectedUnits)
+        foreach (RtsObject rtsObject in selectedObjects)
         {
-            unit.Deselect();
+            if (rtsObject != null)
+                rtsObject.Deselect();
         }
-        selectedUnits.Clear();
+        selectedObjects.Clear();
     }
 }

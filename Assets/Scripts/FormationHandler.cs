@@ -121,7 +121,10 @@ public class FormationHandler : MonoBehaviour
 
     public void FreePosition(Resource resource, Vector3 position)
     {
-        rtsObjectsDict.TryGetValue(resource.GetComponent<RtsObject>(), out var positionsDict);
-        positionsDict[positionsDict.First(t => t.Key == position).Key] = false;
+        if (resource != null)
+        {
+            rtsObjectsDict.TryGetValue(resource.GetComponent<RtsObject>(), out var positionsDict);
+            positionsDict[positionsDict.First(t => t.Key == position).Key] = false;
+        }
     }
 }
