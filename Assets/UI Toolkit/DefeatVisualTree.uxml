@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/EndScreensStyle.uss?fileID=7433441132597879392&amp;guid=490f57a8ae7c70743bd32e94af77e6fb&amp;type=3#EndScreensStyle" />
+    <ui:VisualElement name="Background" class="background">
+        <ui:Label tabindex="-1" text="DEFEAT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Title" class="title" style="top: auto; left: auto;" />
+    </ui:VisualElement>
+</ui:UXML>

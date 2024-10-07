@@ -8,13 +8,19 @@ public abstract class RtsObject : MonoBehaviour
     [Header("Object Values")]
     public string rtsName;
     public List<ActionData> actions;
+    [Tooltip("Team 0 = Player, Team 1 = AI")] public int team;
 
     /// <summary>
     /// Shows the SelectionIndicator under the object
     /// </summary>
     public virtual void Select()
     {
-        GameObject selectionIndicator = Instantiate(GlobalReferences.instance.selectedIndicator, transform);
+        GameObject selectionIndicator;
+
+        if (team == 0)
+            selectionIndicator = Instantiate(GlobalReferences.instance.selectedIndicator, transform);
+        else
+            selectionIndicator = Instantiate(GlobalReferences.instance.enemySelectedIndicator, transform);
         Vector3 newPos = selectionIndicator.transform.position;
         newPos.y = 0;
         selectionIndicator.transform.position = newPos;

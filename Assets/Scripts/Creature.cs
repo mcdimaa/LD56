@@ -20,7 +20,9 @@ public abstract class Creature : Unit
 
     private void Update()
     {
-        CheckAction();
+        // Only take actions if creature is on player team
+        if (team == 0)
+            CheckAction();
     }
 
     /// <summary>

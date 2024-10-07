@@ -12,6 +12,8 @@ public class GuiHandler : MonoBehaviour
 
     [Header("UI References")]
     public VisualElement uiDocument;
+    public GameObject victoryDocument;
+    public GameObject defeatDocument;
 
     public Label foodNumber;
     public Label woodNumber;
@@ -51,6 +53,10 @@ public class GuiHandler : MonoBehaviour
 
         statsBox = uiDocument.Q<VisualElement>("StatsBox");
         actionsBox = uiDocument.Q<VisualElement>("ActionsBox");
+
+        // Disable victory & defeat documents for now
+        victoryDocument.SetActive(false);
+        defeatDocument.SetActive(false);
     }
 
     private void Update()

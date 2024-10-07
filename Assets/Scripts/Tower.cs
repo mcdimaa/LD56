@@ -1,18 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Camp : Building
+public class Tower : Building
 {
-    [Header("Camp References")]
-    public Transform spawnPoint;
-
     private void Update()
     {
         if (health <= 0)
         {
-            GameStateHandler.instance.PlayerDefeat();
+            GameStateHandler.instance.PlayerVictory();
         }
     }
 }

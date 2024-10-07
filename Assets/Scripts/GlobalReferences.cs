@@ -9,6 +9,7 @@ public class GlobalReferences : MonoBehaviour
 
     [Header("Prefabs - Indicators")]
     public GameObject selectedIndicator;
+    public GameObject enemySelectedIndicator;
     public GameObject moveLocationIndicator;
     public GameObject gatherIndicator;
 

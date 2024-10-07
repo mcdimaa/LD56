@@ -5,6 +5,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.EventSystems;
+using UnityEngine.AI;
 
 public class UnitSelection : MonoBehaviour
 {
@@ -330,5 +331,23 @@ public class UnitSelection : MonoBehaviour
                 rtsObject.Deselect();
         }
         selectedObjects.Clear();
+    }
+
+    /// <summary>
+    /// Stops every unit in the game
+    /// </summary>
+    public void StopAllUnits()
+    {
+        foreach (RtsObject rtsObject in rtsObjects)
+        {
+            if (rtsObject is Unit)
+            {
+                Unit unit = (Unit)rtsObject;
+                if (unit.GetComponent<NavMeshAgent>() != null)
+                {
+                    unit.GetComponent<NavMeshAgent>().isStopped = true;
+                }
+            }
+        }
     }
 }
