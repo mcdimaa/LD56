@@ -1,0 +1,53 @@
+.header {
+    -unity-font: url("project://database/Assets/Packages/kenney_ui-pack/Font/Kenney%20Future.ttf?fileID=12800000&guid=2a630d02bccc74945b6918b077b27ee6&type=3#Kenney Future");
+    -unity-font-style: bold;
+    -unity-font-definition: initial;
+    background-color: rgba(0, 0, 0, 0);
+    justify-content: center;
+    align-items: flex-start;
+    align-self: flex-start;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.longButton {
+    width: 150px;
+    height: 30px;
+    align-items: center;
+    align-self: center;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background-image: url("project://database/Assets/Packages/kenney_ui-pack/PNG/Extra/Default/button_square_line.png?fileID=21300000&guid=dee7867ff1195a5418c29fd15be4b71d&type=3#button_square_line");
+    -unity-font: url("project://database/Assets/Packages/kenney_ui-pack/Font/Kenney%20Future.ttf?fileID=12800000&guid=2a630d02bccc74945b6918b077b27ee6&type=3#Kenney Future");
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    -unity-font-definition: initial;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    -unity-slice-scale: 1px;
+}
+
+.paragraph {
+    -unity-font: url("project://database/Assets/Packages/kenney_ui-pack/Font/Kenney%20Future.ttf?fileID=12800000&guid=2a630d02bccc74945b6918b077b27ee6&type=3#Kenney Future");
+    -unity-font-definition: initial;
+    -unity-font-style: normal;
+    font-size: 20px;
+    margin-bottom: 20px;
+    width: 50%;
+    align-self: auto;
+    justify-content: center;
+    align-items: auto;
+    -unity-text-align: upper-left;
+    color: rgb(0, 0, 0);
+}
+
+.resourceBox {
+    flex-direction: row;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
